@@ -1,0 +1,36 @@
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: ${clustername}
+spec:
+  hosts:
+  %{ for addr in controller_addrs }
+  - ssh:
+      address: ${addr}
+      user: root
+      port: 22
+    privateInterface: ens10
+    role: controller
+  %{ endfor }
+
+  %{ for addr in worker_addrs }
+  - ssh:
+      address: ${addr}
+      user: root
+      port: 22
+    privateInterface: ens10
+    role: worker
+  %{ endfor }
+
+  k0s:
+    version: ${version}
+    config:
+      kind: Cluster
+      metadata:
+        name: k0s
+      spec:
+        api:
+          externalAddress: ${externalAddress}
+          sans:
+            - ${externalAddress}
+            - ${publicAddress}
