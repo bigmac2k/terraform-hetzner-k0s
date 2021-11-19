@@ -8,6 +8,7 @@ output "worker_ips" {
 #  value = module.k0sctl.k0sctl_yaml
 #}
 output "kubeconfig" {
+  sensitive = true
   value = module.k0sctl.kubeconfig
 }
 output "public_lb" {
