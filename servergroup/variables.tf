@@ -33,3 +33,9 @@ variable "ssh_keys" {
 variable "placement_group_id" {
   type = string
 }
+variable "netbase" {
+  type = string
+}
+variable "ipbase" {
+  type = number
+}

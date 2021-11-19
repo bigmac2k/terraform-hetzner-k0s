@@ -7,6 +7,7 @@ resource "hcloud_server" "server" {
   server_type = var.server_type
   network {
     network_id = var.network_id
+    ip = "${var.netbase}.${var.ipbase + count.index}"
   }
   placement_group_id = var.placement_group_id
   depends_on = [var.subnet_id]
