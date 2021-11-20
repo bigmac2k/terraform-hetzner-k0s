@@ -14,7 +14,7 @@ variable "clustername" {
 #}
 variable "k0s_version" {
   type        = string
-  default     = "v1.22.2+k0s.2"
+  default     = "v1.22.4+k0s.0"
   description = "Version of k0s to install"
 }
 variable "location" {

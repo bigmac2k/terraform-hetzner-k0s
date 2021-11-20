@@ -20,6 +20,8 @@ spec:
       port: 22
     privateInterface: ens10
     role: worker
+    installFlags:
+    - --enable-cloud-provider=true
   %{ endfor }
 
   k0s:

@@ -1,0 +1,6 @@
+deployment:
+  kind: DaemonSet
+service:
+  annotations:
+   load-balancer.hetzner.cloud/location: nbg1
+   load-balancer.hetzner.cloud/use-private-ip: "true"
