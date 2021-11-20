@@ -19,9 +19,15 @@ function parse_input() {
 
 function get_kubeconfig() {
   kubeconfig="$(k0sctl kubeconfig -c /tmp/k0sctl.yaml| sed "s/server: https:\/\/.*:/server: https:\/\/${PUBLIC_IP}:/")"
+  cluster_ca_certificate="$(echo "${kubeconfig}" | grep certificate-authority-data: | sed 's/.*: //')"
+  client_certificate="$(echo "${kubeconfig}" | grep client-certificate-data: | sed 's/.*: //')"
+  client_key="$(echo "${kubeconfig}" | grep client-key-data: | sed 's/.*: //')"
   jq -n \
     --arg kubeconfig "${kubeconfig}" \
-    '{"kubeconfig": $kubeconfig, "kubeconfig_base64": $kubeconfig | @base64}'
+    --arg cluster_ca_certificate "${cluster_ca_certificate}" \
+    --arg client_certificate "${client_certificate}" \
+    --arg client_key "${client_key}" \
+    '{"kubeconfig": $kubeconfig, "kubeconfig_base64": $kubeconfig | @base64, "cluster_ca_certificate": $cluster_ca_certificate, "client_certificate": $client_certificate, "client_key": $client_key}'
 }
 
 
