@@ -14,7 +14,7 @@ variable "clustername" {
 #}
 variable "k0s_version" {
   type        = string
-  default     = "v1.22.4+k0s.0"
+  default     = "v1.22.4+k0s.1"
   description = "Version of k0s to install"
 }
 variable "location" {
@@ -31,7 +31,7 @@ variable "mastergroups" {
     {
       count = 3
       name = "k0s-master"
-      server_type = "cx11-ceph"
+      server_type = "cx11"
       labels = []
     }
   ]

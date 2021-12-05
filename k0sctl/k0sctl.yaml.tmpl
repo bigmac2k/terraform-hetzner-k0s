@@ -33,6 +33,8 @@ spec:
       spec:
         network:
           provider: calico
+          calico:
+            wireguard: true
         api:
           externalAddress: ${externalAddress}
           sans:
