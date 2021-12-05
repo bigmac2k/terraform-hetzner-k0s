@@ -31,6 +31,8 @@ spec:
       metadata:
         name: k0s
       spec:
+        network:
+          provider: calico
         api:
           externalAddress: ${externalAddress}
           sans:
