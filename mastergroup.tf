@@ -8,7 +8,7 @@ module "mastergroup" {
   extralabels = {"master-${var.clustername}" = "", name = var.clustername}
   ssh_keys = [hcloud_ssh_key.ssh_root.name]
   location = var.location
-  server_type = "cx11-ceph"
+  server_type = "cx11"
   placement_group_id = hcloud_placement_group.placementgroup.id
   netbase = "10.0.0"
   ipbase = 50
