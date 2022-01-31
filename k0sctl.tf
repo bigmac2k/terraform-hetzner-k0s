@@ -1,9 +1,16 @@
 module "k0sctl" {
-  source = "./k0sctl"
+  source = "github.com/bigmac2k/terraform-k0sctl"
   clustername = "k0s"
-  controller_addrs = module.mastergroup.ips.*.ipv4_address
-  worker_addrs = module.workergroup.ips.*.ipv4_address
+  controller_addrs = [for addr in tolist(module.mastergroup.ips.*.ipv4_address): {
+    addr = addr
+    private_interface = "ens10"
+  }]
+  worker_addrs = [for addr in tolist(module.workergroup.ips.*.ipv4_address): {
+    addr = addr
+    private_interface = "ens10"
+  }]
   k0s_version = var.k0s_version
-  externalAddress = hcloud_load_balancer_network.lb-internal-net.ip
-  publicAddress = hcloud_load_balancer.external.ipv4
+  kubeapiIp = hcloud_load_balancer_network.lb-internal-net.ip
+  kubeapiIpPublicOverride = hcloud_load_balancer.external.ipv4
+  extra_sans = [hcloud_load_balancer.external.ipv4]
 }
