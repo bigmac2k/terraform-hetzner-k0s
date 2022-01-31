@@ -140,30 +140,3 @@ resource "kubernetes_deployment" "deployment_kube_system_hcloud_cloud_controller
   }
   depends_on = [kubernetes_secret.hcloud_token]
 }
-
-resource "helm_release" "traefik" {
-  name = "traefik"
-  namespace = "traefik"
-  repository = "https://helm.traefik.io/traefik"
-  chart = "traefik"
-  create_namespace = true
-  dependency_update = true
-  #wait = false
-  values = [
-    file("traefik.yaml")
-  ]
-  #set {
-  #  name = "deployment.kind"
-  #  value = "DaemonSet"
-  #}
-  #set {
-  #  name = "service.annotations.load-balancer\\.hetzner\\.cloud/location"
-  #  value = var.location
-  #}
-  #set {
-  #  name = "service.annotations.load-balancer\\.hetzner\\.cloud/use-private-ip"
-  #  value = true
-  #}
-  depends_on = [kubernetes_service_account.serviceaccount_kube_system_cloud_controller_manager, kubernetes_cluster_role_binding.clusterrolebinding_system_cloud_controller_manager, kubernetes_deployment.deployment_kube_system_hcloud_cloud_controller_manager]
-  #depends_on = [hcloud_load_balancer.http, kubernetes_service_account.serviceaccount_kube_system_cloud_controller_manager, kubernetes_cluster_role_binding.clusterrolebinding_system_cloud_controller_manager, kubernetes_deployment.deployment_kube_system_hcloud_cloud_controller_manager]
-}
